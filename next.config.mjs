@@ -2,10 +2,22 @@
 const nextConfig = {
   /* config options here */
   images: {
-    domains: [
-      "i.pinimg.com",
-      "images.unsplash.com",
-      "rwqdczoljaydvxfstuwr.supabase.co",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "i.pinimg.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "rwqdczoljaydvxfstuwr.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
     ],
   },
 };
