@@ -49,7 +49,7 @@ const ProductDetailPage = () => {
   }
 
   return (
-    <main className="max-w-6xl mx-auto  px-6 sm:px-8 lg:px-12 py-8">
+    <main className="max-w-6xl mx-auto  px-6 sm:px-8 lg:px- py-8">
       {/* MAIN PRODUCT */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Images */}

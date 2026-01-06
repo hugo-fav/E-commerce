@@ -26,7 +26,7 @@ function Navbar() {
     <header
       className={`w-full bg-white transition-all duration-300 ${
         scrolled ? "shadow-[0_4px_20px_rgba(0,0,0,0.06)]" : ""
-      } mb-15` }
+      } mb-15`}
     >
       <div className="relative max-w-6xl mx-auto px-6 h-[88px] flex items-center">
         {/* MOBILE ONLY */}
@@ -64,7 +64,7 @@ function Navbar() {
         <Link href="/" className="absolute left-1/2 -translate-x-1/2">
           <Image
             src="/favicon.jpg"
-            alt="Logo"
+            alt="Brang logo"
             width={44}
             height={44}
             priority

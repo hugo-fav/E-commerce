@@ -11,7 +11,7 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <h3 className="text-sm font-medium tracking-wide uppercase text-gray-900">
-              Your Brand
+              Brand
             </h3>
             <p className="mt-3 text-sm text-gray-600 leading-relaxed max-w-xs">
               Premium products curated with quality and simplicity in mind. Shop

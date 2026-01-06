@@ -1,9 +1,18 @@
 "use client";
 
 import { useCart } from "@/context/cartContext";
+import { useEffect, useState } from "react";
 
 const CheckoutPage = () => {
   const { cartItems, subtotal } = useCart();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // 🚫 Prevent hydration mismatch
+  if (!mounted) return null;
 
   if (cartItems.length === 0) {
     return (
@@ -17,7 +26,7 @@ const CheckoutPage = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-12">
+    <div className="max-w-6xl mx-auto px-6 py-4">
       {/* Page Title */}
       <div className="mb-10">
         <h1 className="text-2xl md:text-3xl font-medium tracking-wide uppercase">
