@@ -1,5 +1,9 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import CartUI from "@/components/cart/layout/cartUI";
+import { CartProvider } from "@/context/cartContext";
+import Footer from "@/components/footer";
+import Navbar from "@/components/navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,9 +24,24 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col text-foreground`}
       >
-        {children}
+        <CartProvider>
+          {/* Global centered shell */}
+          <div className="flex-1 max-w-6xl mx-auto  px-6 sm:px-8 lg:px-12 w-full py-8 ">
+            {/* Global Navbar (constrained) */}
+            <Navbar />
+
+            {/* Page content */}
+            <main>{children}</main>
+          </div>
+
+          {/* Footer (same width rhythm, slightly different bg already handled) */}
+          <Footer />
+
+          {/* Cart Overlay */}
+          <CartUI />
+        </CartProvider>
       </body>
     </html>
   );
