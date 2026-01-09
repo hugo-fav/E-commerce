@@ -90,6 +90,7 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         cartCount,
         subtotal,
+        clearCart: () => setCartItems([]),
       }}
     >
       {children}

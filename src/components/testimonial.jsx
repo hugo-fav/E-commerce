@@ -1,10 +1,13 @@
 "use client";
 
+import Image from "next/image";
+
 const testimonials = [
   {
     id: 1,
     name: "Aisha Bello",
     role: "Verified Customer",
+    image: "/profilepicture/p1.jfif",
     message:
       "The quality exceeded my expectations. Delivery was fast and the packaging was clean. I’ll definitely shop again.",
   },
@@ -12,6 +15,7 @@ const testimonials = [
     id: 2,
     name: "Daniel Okorie",
     role: "Returning Customer",
+    image: "/profilepicture/p2.jfif",
     message:
       "Very smooth shopping experience. The product images were accurate and customer support was helpful.",
   },
@@ -19,6 +23,7 @@ const testimonials = [
     id: 3,
     name: "Fatima Yusuf",
     role: "First-time Buyer",
+    image: "/profilepicture/p3.jfif",
     message:
       "I was impressed by how easy everything was. Checkout was seamless and my order arrived on time.",
   },
@@ -26,6 +31,7 @@ const testimonials = [
     id: 4,
     name: "Samuel Ade",
     role: "Loyal Customer",
+    image: "/profilepicture/p4.jfif",
     message:
       "Everything from browsing to payment felt polished. This store clearly pays attention to detail.",
   },
@@ -54,9 +60,19 @@ const TestimonialSection = () => {
             </p>
 
             {/* Author */}
-            <div className="mt-6">
-              <p className="text-sm font-medium text-gray-900">{item.name}</p>
-              <p className="text-xs text-gray-500">{item.role}</p>
+            <div className="mt-6 flex items-center gap-4">
+              <Image
+                src={item.image}
+                alt={item.name}
+                width={48}
+                height={48}
+                className="rounded-full object-cover grayscale"
+              />
+
+              <div>
+                <p className="text-sm font-medium text-gray-900">{item.name}</p>
+                <p className="text-xs text-gray-500">{item.role}</p>
+              </div>
             </div>
           </div>
         ))}
