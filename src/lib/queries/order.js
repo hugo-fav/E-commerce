@@ -1,12 +1,39 @@
 // lib/createOrder.js
 import { supabase } from "../supabaseClient";
 
+export async function getOrders() {
+  const { data, error } = await supabase
+    .from("orders")
+    .select(
+      `
+      *,
+      order_items (
+        id,
+        quantity,
+        price,
+        products (
+          id,
+          name,
+          images
+        )
+      )
+    `
+    )
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+  return data;
+}
+
 export const createOrder = async ({ customer, items, totalAmount }) => {
+  const reference = Math.random().toString(36).substring(2, 10).toUpperCase();
+
   // 1️⃣ Insert order
   const { data: order, error: orderError } = await supabase
     .from("orders")
     .insert([
       {
+        reference,
         user_name: customer.fullName,
         user_email: customer.email,
         user_phone: customer.phone,

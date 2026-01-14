@@ -4,11 +4,14 @@ export async function POST(req) {
   try {
     const { customer, items, totalAmount } = await req.json();
 
+    const reference = Math.random().toString(36).substring(2, 10).toUpperCase();
+
     // 1️⃣ Create order
     const { data: order, error: orderError } = await supabaseAdmin
       .from("orders")
       .insert([
         {
+          reference,
           user_name: customer.fullName,
           user_email: customer.email,
           user_phone: customer.phone,

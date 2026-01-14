@@ -126,6 +126,16 @@ const OrderSuccessPage = () => {
         </div>
       </div>
 
+      <p>
+        Track your order:
+        <a
+          href={`/orders/track/${order.reference}`}
+          className="text-blue-600 underline"
+        >
+          View Order
+        </a>
+      </p>
+
       <div className="text-center mt-10">
         <button
           onClick={() => router.push("/")}

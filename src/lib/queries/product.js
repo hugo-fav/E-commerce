@@ -80,3 +80,12 @@ export async function createProduct(product) {
 
   if (error) throw error;
 }
+
+export async function updateProduct(id, updates) {
+  const { error } = await supabase
+    .from("products")
+    .update(updates)
+    .eq("id", id);
+
+  if (error) throw error;
+}
