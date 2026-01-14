@@ -1,7 +1,6 @@
-// ...existing code...
 import { Resend } from "resend";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
 
 export const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -23,7 +22,7 @@ export async function sendOrderStatusEmail({
   if (!process.env.RESEND_API_KEY) {
     throw new Error("Missing RESEND_API_KEY");
   }
-  const from = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev"; // set RESEND_FROM_EMAIL in env to a verified sender
+  const from = "Your Store <orders@e-commerce-two-nu-19.vercel.app>";
 
   const safeName = escapeHtml(name);
   const safeRef = escapeHtml(reference);
@@ -59,4 +58,3 @@ Thank you for shopping with us.`;
     throw err;
   }
 }
-// ...existing code...
