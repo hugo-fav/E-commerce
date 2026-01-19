@@ -1,12 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
+import { useCart } from "@/context/cartContext";
 
 const OrderSuccessPage = () => {
   const { id } = useParams(); // order ID from URL
   const router = useRouter();
+  const { clearCart } = useCart;
+  const clearedRef = useRef(false);
 
   const [order, setOrder] = useState(null);
   const [items, setItems] = useState([]);
@@ -47,6 +50,19 @@ const OrderSuccessPage = () => {
     fetchOrder();
   }, [id]);
 
+  useEffect(() => {
+    if (!order) return;
+    if (order.payment_status === "paid" && !clearedRef.current) {
+      try {
+        clearCart?.();
+      } catch (err) {
+        console.error("Failed to clear cart:", err);
+      } finally {
+        clearedRef.current = true;
+      }
+    }
+  }, [order, clearCart]);
+
   if (loading) {
     return (
       <div className="max-w-3xl mx-auto p-10 text-center">
@@ -77,6 +93,9 @@ const OrderSuccessPage = () => {
         </h1>
         <p className="mt-2 text-gray-500">
           Your order ID is <strong>#{order.id}</strong>
+        </p>
+        <p className="mt-2 text-gray-500">
+          Your order reference is <strong>#{order.reference}</strong>
         </p>
       </div>
 

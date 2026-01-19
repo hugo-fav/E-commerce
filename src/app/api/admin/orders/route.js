@@ -37,7 +37,7 @@ export async function PATCH(req) {
 
     // 3️⃣ Send email (NOW DATA EXISTS)
     await sendOrderStatusEmail({
-      to: updatedOrder.user_email,
+      to: "favourugochukwu548@gmail.com",
       name: updatedOrder.user_name,
       reference: updatedOrder.reference,
       status: updatedOrder.status,

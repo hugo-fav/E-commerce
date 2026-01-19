@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 const CheckoutPage = () => {
   const router = useRouter();
-  const { cartItems, subtotal, clearCart } = useCart();
+  const { cartItems, subtotal } = useCart();
 
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -36,27 +36,34 @@ const CheckoutPage = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/create-order", {
+      const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           customer: checkoutData,
           items: cartItems,
-          totalAmount: subtotal,
+          totalAmount: Number(subtotal), // ensure numeric
         }),
       });
 
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.error);
+      if (!res.ok) {
+        console.error("Checkout API error:", data);
+        throw new Error(data?.error || "Checkout failed");
+      }
 
-      alert("Order created successfully! ID: " + data.order.id);
+      if (!data?.authorization_url) {
+        console.error("No authorization_url in response:", data);
+        alert("Payment initialization failed. Check server logs.");
+        return;
+      }
 
-      clearCart();
-      router.push(`/order-success/${data.order.id}`);
+      // redirect user to Paystack
+      window.location.href = data.authorization_url;
     } catch (err) {
       console.error("Checkout error:", err);
-      alert("Checkout failed: " + err.message);
+      alert("Checkout failed: " + (err.message || "Unknown error"));
     } finally {
       setLoading(false);
     }

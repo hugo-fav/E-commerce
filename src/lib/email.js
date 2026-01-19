@@ -22,7 +22,9 @@ export async function sendOrderStatusEmail({
   if (!process.env.RESEND_API_KEY) {
     throw new Error("Missing RESEND_API_KEY");
   }
-  const from = "Your Store <orders@e-commerce-two-nu-19.vercel.app>";
+
+  // after getting the domain and adding the dns this is what i have to change
+  const from = "Your Store <onboarding@resend.dev>";
 
   const safeName = escapeHtml(name);
   const safeRef = escapeHtml(reference);
