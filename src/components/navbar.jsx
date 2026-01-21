@@ -63,7 +63,7 @@ function Navbar() {
         {/* CENTER – LOGO */}
         <Link href="/" className="absolute left-1/2 -translate-x-1/2">
           <Image
-            src="/favicon.jpg"
+            src="/logo2.jfif"
             alt="Brang logo"
             width={44}
             height={44}

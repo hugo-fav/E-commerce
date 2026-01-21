@@ -11,7 +11,7 @@ export async function getActiveProducts() {
         name,
         slug
       )
-    `
+    `,
     )
     .eq("is_active", true);
 
@@ -44,7 +44,7 @@ export async function getProductById(id) {
         name,
         slug
       )
-    `
+    `,
     )
     .eq("id", id)
     .eq("is_active", true)
@@ -65,7 +65,7 @@ export async function getRelatedProducts(categoryId, currentProductId) {
         name,
         slug
       )
-    `
+    `,
     )
     .eq("category_id", categoryId)
     .neq("id", currentProductId)
@@ -88,4 +88,16 @@ export async function updateProduct(id, updates) {
     .eq("id", id);
 
   if (error) throw error;
+}
+
+export async function deleteProduct(productId) {
+  if (productId == null) throw new Error("Missing product id");
+
+  const { error } = await supabase
+    .from("products")
+    .delete()
+    .eq("id", productId);
+
+  if (error) throw error;
+  return true;
 }

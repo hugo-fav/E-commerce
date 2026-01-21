@@ -10,9 +10,10 @@ export default function AdminNavbar() {
   const pathname = usePathname();
 
   const navLinks = [
-    { name: "Dashboard", path: "/admin" },
-    { name: "Products", path: "/admin/products" },
+    { name: "Product", path: "/admin" },
+    { name: "New Products", path: "/admin/products" },
     { name: "Orders", path: "/admin/orders" },
+    { name: "Overview", path: "/admin/overview" },
   ];
 
   return (
@@ -51,7 +52,7 @@ export default function AdminNavbar() {
         </button>
 
         {/* TITLE */}
-        <h1 className="text-lg font-semibold mb-8">Admin Panel</h1>
+        <h1 className="text-lg font-semibold mb-8">Online shopping</h1>
 
         {/* NAV LINKS */}
         <nav className="flex flex-col gap-1">

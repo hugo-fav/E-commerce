@@ -78,7 +78,56 @@ export async function POST(req) {
       }
 
       console.log("Order marked as paid:", orderId);
+
+      // --- Move stock reduction here (inside charge.success) ---
+      const { data: orderItems, error: itemsError } = await supabaseAdmin
+        .from("order_items")
+        .select("product_id, quantity")
+        .eq("order_id", orderId);
+
+      if (itemsError) {
+        console.error("failed to fetch order items:", itemsError);
+        // non-fatal: continue, but log
+      } else {
+        for (const item of orderItems) {
+          // Prefer an RPC that does atomic decrement if you have it:
+          // const { data: rpcData, error: rpcErr } = await supabaseAdmin
+          //   .rpc("decrement_product_stock", { p_product_id: item.product_id, p_qty: item.quantity });
+          // if (rpcErr) { console.error("RPC error", rpcErr); }
+
+          // Fallback: read then update (note: potential race conditions)
+          const { data: product, error: productError } = await supabaseAdmin
+            .from("products")
+            .select("stock")
+            .eq("id", item.product_id)
+            .single();
+
+          if (productError || !product) {
+            console.error("product not found", item.product_id);
+            continue;
+          }
+
+          const newStock = Math.max((product.stock || 0) - item.quantity, 0);
+
+          const { error: stockError } = await supabaseAdmin
+            .from("products")
+            .update({ stock: newStock })
+            .eq("id", item.product_id);
+
+          if (stockError) {
+            console.error(
+              `failed to update for product ${item.product_id}`,
+              stockError
+            );
+          } else {
+            console.log(
+              `Product ${item.product_id} stock updated -> ${newStock}`
+            );
+          }
+        }
+      }
     }
+    
 
     return new Response("OK", { status: 200 });
   } catch (err) {

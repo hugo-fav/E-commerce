@@ -11,7 +11,7 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <h3 className="text-sm font-medium tracking-wide uppercase text-gray-900">
-              Brand
+              online shopping
             </h3>
             <p className="mt-3 text-sm text-gray-600 leading-relaxed max-w-xs">
               Premium products curated with quality and simplicity in mind. Shop
@@ -33,6 +33,11 @@ const Footer = () => {
               <li>
                 <Link href="/product" className="hover:text-black transition">
                   Products
+                </Link>
+              </li>
+              <li>
+                <Link href="/admin" className="hover:text-black transition">
+                  Admin
                 </Link>
               </li>
             </ul>
@@ -65,7 +70,7 @@ const Footer = () => {
 
         {/* Bottom */}
         <div className="mt-12 border-t border-gray-200 pt-6 text-center text-xs text-gray-500">
-          © {new Date().getFullYear()} Your Brand. All rights reserved.
+          © {new Date().getFullYear()} online shopping. All rights reserved.
         </div>
       </div>
     </footer>

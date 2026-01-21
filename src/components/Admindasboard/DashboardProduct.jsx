@@ -11,7 +11,7 @@ function DashboardProduct({ products, categories }) {
     selectedCategory === "all"
       ? products
       : products.filter(
-          (product) => product.category?.slug === selectedCategory
+          (product) => product.category?.slug === selectedCategory,
         );
 
   return (

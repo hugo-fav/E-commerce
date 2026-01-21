@@ -1,7 +1,27 @@
+import { deleteProduct } from "@/lib/queries/product";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 function DashboardProductGrid({ products }) {
+  const [localProducts, setLocalProducts] = useState(products || []);
+  const [deletingId, setDeletingId] = useState(null);
+
+  const handleDelete = async (id) => {
+    if (!confirm("Delete this product? This cannot be undone.")) return;
+
+    try {
+      setDeletingId(id);
+      await deleteProduct(id);
+      setLocalProducts((prev) => prev.filter((p) => p.id !== id));
+    } catch (err) {
+      console.error("Delete failed:", err);
+      alert(err?.message || "Failed to delete product");
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
   return (
     <div className="divide-y divide-gray-200">
       {products.map((product) => (
@@ -47,6 +67,15 @@ function DashboardProductGrid({ products }) {
           >
             Edit
           </Link>
+
+          <button
+            type="button"
+            onClick={() => handleDelete(product.id)}
+            className="px-3 py-2 bg-black text-white text-sm rounded"
+            disabled={deletingId === product.id}
+          >
+            {deletingId === product.id ? "Deleting..." : "Delete"}
+          </button>
         </div>
       ))}
     </div>
